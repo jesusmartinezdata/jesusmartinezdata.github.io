@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jesús E. Martínez S. | Data Analyst & Database Specialist</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js para visualizaciones reales en la web -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0b0f19;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+
+        .code-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Glassmorphism Premium */
+        .glass-card {
+            background: rgba(17, 24, 39, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(59, 130, 246, 0.4);
+            box-shadow: 0 20px 50px rgba(59, 130, 246, 0.15);
+        }
+
+        /* Ambient Glow Effect */
+        .glow-bg {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Text Gradient */
+        .text-gradient {
+            background: linear-gradient(135deg, #60a5fa 0%, #a855f7 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-gradient-cyan {
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Modal styling */
+        #cvModal {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+    </style>
+</head>
+<body class="relative">
+
+    <!-- Glowing Orbs (Fondo dinámico) -->
+    <div class="glow-bg w-[500px] h-[500px] bg-blue-600/20 -top-20 -left-20"></div>
+    <div class="glow-bg w-[600px] h-[600px] bg-purple-600/15 top-[30%] -right-20"></div>
+    <div class="glow-bg w-[500px] h-[500px] bg-cyan-500/15 bottom-10 left-1/3"></div>
+
+    <!-- Canvas de Partículas para fondo de Datos -->
+    <canvas id="particleCanvas" class="fixed top-0 left-0 w-full h-full pointer-events-none z-0 opacity-40"></canvas>
+
+    <!-- Content Container -->
+    <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-12">
+
+        <!-- Navbar -->
+        <nav class="flex justify-between items-center py-8">
+            <div class="text-2xl font-extrabold tracking-tight flex items-center gap-2">
+                <span class="text-blue-500 code-font">&lt;JMS&gt;</span>
+                <span>Jesús Martínez</span>
+            </div>
+            <div class="hidden md:flex items-center gap-8 font-medium text-gray-300 text-sm">
+                <a href="#about" class="hover:text-blue-400 transition-colors">Sobre Mí</a>
+                <a href="#skills" class="hover:text-blue-400 transition-colors">Stack Técnico</a>
+                <a href="#experience" class="hover:text-blue-400 transition-colors">Trayectoria</a>
+                <a href="#projects" class="hover:text-blue-400 transition-colors">Proyectos & BI</a>
+            </div>
+            <button onclick="openModal()" class="glass-card px-5 py-2.5 rounded-full border border-blue-500/30 hover:bg-blue-600/20 transition-all text-sm font-semibold flex items-center gap-2 text-blue-400 hover:text-white">
+                <i class="fa-solid fa-file-pdf"></i> Ver CV
+            </button>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="min-h-[85vh] flex flex-col justify-center items-start pt-10 pb-20">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-xs font-semibold text-blue-400 mb-6 border border-blue-500/20">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                Disponible para proyectos y posiciones Data/BI
+            </div>
+            
+            <h1 class="text-5xl lg:text-7xl font-extrabold tracking-tight leading-tight max-w-4xl mb-6">
+                Ingeniería de Datos con <span class="text-gradient">Criterio Estético</span> y Visión de Negocio.
+            </h1>
+            
+            <p class="text-lg lg:text-xl text-gray-400 max-w-2xl mb-10 leading-relaxed">
+                Soy <strong class="text-gray-200">Ingeniero en Informática</strong> especializado en arquitectura de bases de datos y Business Intelligence. Combino rigor técnico en SQL con un pasado en diseño UX/UI para transformar arquitecturas complejas en dashboards elegantes y estratégicos[cite: 1].
+            </p>
+
+            <div class="flex flex-wrap gap-4 items-center">
+                <a href="mailto:jesusmartinezsilver@gmail.com" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold px-8 py-4 rounded-xl shadow-lg shadow-blue-500/25 transition-all transform hover:-translate-y-1">
+                    Iniciar Contacto
+                </a>
+                <button onclick="openModal()" class="glass-card hover:bg-white/5 text-gray-300 font-semibold px-8 py-4 rounded-xl transition-all border border-gray-700">
+                    Previsualizar CV
+                </button>
+            </div>
+
+            <!-- Quick Metrics Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 w-full mt-20 pt-10 border-t border-gray-800/80">
+                <div>
+                    <h3 class="text-3xl font-bold text-white code-font">UCV</h3>
+                    <p class="text-xs text-gray-400 mt-1">Doble Diplomado BI & DB Developer[cite: 1]</p>
+                </div>
+                <div>
+                    <h3 class="text-3xl font-bold text-white code-font">SQL + BI</h3>
+                    <p class="text-xs text-gray-400 mt-1">Especialización de Extremo a Extremo[cite: 1]</p>
+                </div>
+                <div>
+                    <h3 class="text-3xl font-bold text-white code-font">UI / UX</h3>
+                    <p class="text-xs text-gray-400 mt-1">Front-End & Diseño Visual[cite: 1]</p>
+                </div>
+                <div>
+                    <h3 class="text-3xl font-bold text-white code-font">26 Años</h3>
+                    <p class="text-xs text-gray-400 mt-1">Ingeniero en Informática (Venezuela)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About / Dual Profile Section -->
+        <section id="about" class="py-20">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-3">Mi Valor Diferencial</h2>
+                <p class="text-3xl lg:text-4xl font-bold">Donde la Solidez Backend se Encuentra con el Impacto Visual</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Card 1: DB Specialist -->
+                <div class="glass-card p-8 rounded-2xl relative overflow-hidden group">
+                    <div class="w-14 h-14 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400 text-2xl mb-6 border border-blue-500/20">
+                        <i class="fa-solid fa-database"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Database Specialist</h3>
+                    <p class="text-gray-400 leading-relaxed text-sm mb-6">
+                        Estructuración, optimización de consultas complejas en PostgreSQL y diseño de arquitectura relacional confiable[cite: 1]. Garantizo que el origen de los datos sea rápido, escalable y limpio.
+                    </p>
+                    <ul class="space-y-2 text-xs code-font text-gray-300">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-blue-400"></i> Modelado Relacional / Normalización</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-blue-400"></i> Optimización de Consultas SQL Avanzadas[cite: 1]</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-blue-400"></i> Flujos ETL y Gestión Estructurada[cite: 1]</li>
+                    </ul>
+                </div>
+
+                <!-- Card 2: BI & Data Analyst -->
+                <div class="glass-card p-8 rounded-2xl relative overflow-hidden group">
+                    <div class="w-14 h-14 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400 text-2xl mb-6 border border-purple-500/20">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Data Analyst & BI</h3>
+                    <p class="text-gray-400 leading-relaxed text-sm mb-6">
+                        Traducción de datos tabulares a historias visuales y dashboards ejecutivos[cite: 1]. Gracias a mi trasfondo en Front-End y diseño gráfico, construyo interfaces de analítica claras e intuitivas[cite: 1].
+                    </p>
+                    <ul class="space-y-2 text-xs code-font text-gray-300">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-purple-400"></i> Dashboards Interactivos en Power BI[cite: 1]</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-purple-400"></i> Análisis con Python & Pandas[cite: 1]</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-purple-400"></i> Diseño de Experiencia de Usuario (UI/UX)[cite: 1]</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Stack -->
+        <section id="skills" class="py-20">
+            <div class="glass-card rounded-3xl p-10 lg:p-14">
+                <div class="max-w-xl mb-12">
+                    <h2 class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-3">Stack Tecnológico</h2>
+                    <p class="text-3xl font-bold">Herramientas & Dominio</p>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6 text-center">
+                    <div class="p-4 rounded-xl bg-gray-900/50 border border-gray-800 hover:border-blue-500/50 transition-all">
+                        <i class="fa-solid fa-server text-3xl text-blue-400 mb-3"></i>
+                        <h4 class="font-bold text-sm">PostgreSQL / SQL</h4>
+                        <p class="text-[10px] text-gray-400 mt-1">Avanzado[cite: 1]</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-gray-900/50 border border-gray-800 hover:border-yellow-500/50 transition-all">
+                        <i class="fa-brands fa-python text-3xl text-yellow-400 mb-3"></i>
+                        <h4 class="font-bold text-sm">Python</h4>
+                        <p class="text-[10px] text-gray-400 mt-1">Análisis de Datos[cite: 1]</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-gray-900/50 border border-gray-800 hover:border-amber-500/50 transition-all">
+                        <i class="fa-solid fa-chart-column text-3xl text-amber-500 mb-3"></i>
+                        <h4 class="font-bold text-sm">Power BI</h4>
+                        <p class="text-[10px] text-gray-400 mt-1">Business Intelligence[cite: 1]</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-gray-900/50 border border-gray-800 hover:border-cyan-500/50 transition-all">
+                        <i class="fa-solid fa-code text-3xl text-cyan-400 mb-3"></i>
+                        <h4 class="font-bold text-sm">Front-End</h4>
+                        <p class="text-[10px] text-gray-400 mt-1">HTML/CSS/JS/Figma[cite: 1]</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-gray-900/50 border border-gray-800 hover:border-green-500/50 transition-all">
+                        <i class="fa-solid fa-file-excel text-3xl text-green-500 mb-3"></i>
+                        <h4 class="font-bold text-sm">Excel Avanzado</h4>
+                        <p class="text-[10px] text-gray-400 mt-1">Modelado & Reportes[cite: 1]</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-gray-900/50 border border-gray-800 hover:border-pink-500/50 transition-all">
+                        <i class="fa-solid fa-palette text-3xl text-pink-400 mb-3"></i>
+                        <h4 class="font-bold text-sm">Diseño UI/UX</h4>
+                        <p class="text-[10px] text-gray-400 mt-1">Adobe XD / Figma[cite: 1]</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive BI Demo Widget -->
+        <section id="projects" class="py-20">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
+                <div>
+                    <h2 class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-3">Demo Interactiva</h2>
+                    <p class="text-3xl font-bold">Visualización Dinámica de Muestra</p>
+                </div>
+                <p class="text-xs text-gray-400 max-w-xs mt-2 md:mt-0">Demo simulada renderizada en tiempo real mediante JavaScript.</p>
+            </div>
+
+            <div class="glass-card p-8 rounded-3xl border border-gray-800">
+                <div class="flex flex-wrap justify-between items-center mb-6 gap-4">
+                    <div>
+                        <h3 class="font-bold text-lg">Métricas de Rendimiento General</h3>
+                        <p class="text-xs text-gray-400">Consolidado de contratos procesados y auditorías[cite: 1]</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <span class="px-3 py-1 bg-blue-500/10 text-blue-400 text-xs rounded-lg border border-blue-500/20">SQL Pipeline Active</span>
+                        <span class="px-3 py-1 bg-emerald-500/10 text-emerald-400 text-xs rounded-lg border border-emerald-500/20">Accuracy 99.4%</span>
+                    </div>
+                </div>
+                <div class="h-64 w-full">
+                    <canvas id="demoChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Timeline -->
+        <section id="experience" class="py-20">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-3">Trayectoria</h2>
+                <p class="text-3xl font-bold">Experiencia & Formación Académica</p>
+            </div>
+
+            <div class="max-w-4xl mx-auto space-y-8 relative before:absolute before:inset-0 before:left-1/2 before:-ml-px before:w-0.5 before:bg-gradient-to-b before:from-blue-500 before:via-purple-500 before:to-transparent hidden md:block"></div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Laboral -->
+                <div class="space-y-6">
+                    <h3 class="text-xl font-bold text-blue-400 flex items-center gap-2 mb-6">
+                        <i class="fa-solid fa-briefcase"></i> Experiencia Laboral
+                    </h3>
+
+                    <div class="glass-card p-6 rounded-xl relative">
+                        <span class="text-xs text-blue-400 font-semibold">2023 - Presente</span>
+                        <h4 class="font-bold text-lg mt-1">Diseñador Web Front-End & UI/UX[cite: 1]</h4>
+                        <p class="text-xs text-gray-400 mb-3">Independiente[cite: 1]</p>
+                        <p class="text-sm text-gray-300">Diseño e implementación de interfaces web interactivas con énfasis en usabilidad y conexión con bases de datos backend[cite: 1].</p>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-xl relative">
+                        <span class="text-xs text-blue-400 font-semibold">Mayo 2023 - Junio 2026</span>
+                        <h4 class="font-bold text-lg mt-1">Auditor de Calidad de Datos[cite: 1]</h4>
+                        <p class="text-xs text-gray-400 mb-3">Sector Energético[cite: 1]</p>
+                        <p class="text-sm text-gray-300">Verificación, validación y conformidad de contratos masivos, asegurando integridad en los registros[cite: 1].</p>
+                    </div>
+                </div>
+
+                <!-- Educación -->
+                <div class="space-y-6">
+                    <h3 class="text-xl font-bold text-purple-400 flex items-center gap-2 mb-6">
+                        <i class="fa-solid fa-graduation-cap"></i> Educación & Certificaciones
+                    </h3>
+
+                    <div class="glass-card p-6 rounded-xl border-l-4 border-l-purple-500">
+                        <span class="text-xs text-purple-400 font-semibold">Universidad Central de Venezuela (UCV)[cite: 1]</span>
+                        <h4 class="font-bold text-lg mt-1">Diplomado en Database Developer[cite: 1]</h4>
+                        <p class="text-xs text-gray-400">Junio 2026 - En curso[cite: 1]</p>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-xl border-l-4 border-l-purple-500">
+                        <span class="text-xs text-purple-400 font-semibold">Universidad Central de Venezuela (UCV)[cite: 1]</span>
+                        <h4 class="font-bold text-lg mt-1">Diplomado en Business Intelligence[cite: 1]</h4>
+                        <p class="text-xs text-gray-400">Julio 2025 - Diciembre 2025[cite: 1]</p>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-xl border-l-4 border-l-blue-500">
+                        <span class="text-xs text-blue-400 font-semibold">Universidad UPTAMCA[cite: 1]</span>
+                        <h4 class="font-bold text-lg mt-1">Ingeniería en Informática[cite: 1]</h4>
+                        <p class="text-xs text-gray-400">Graduado en 2022[cite: 1]</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="py-12 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-gray-500">
+            <div>
+                <p>© 2026 Jesús E. Martínez S. - Todos los derechos reservados.</p>
+                <p class="text-xs text-gray-600 mt-1">Edo Miranda, Los Teques, Venezuela[cite: 1]</p>
+            </div>
+            <div class="flex gap-6 text-xl text-gray-400">
+                <a href="mailto:jesusmartinezsilver@gmail.com" class="hover:text-blue-400 transition-colors"><i class="fa-solid fa-envelope"></i></a>
+                <a href="tel:+584242300290" class="hover:text-blue-400 transition-colors"><i class="fa-solid fa-phone"></i></a>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- CV MODAL POPUP -->
+    <div id="cvModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none">
+        <div class="glass-card w-full max-w-4xl h-[90vh] rounded-2xl flex flex-col overflow-hidden border border-gray-700">
+            <!-- Modal Header -->
+            <div class="flex justify-between items-center p-6 border-b border-gray-800 bg-gray-900/50">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-file-pdf text-red-400 text-2xl"></i>
+                    <div>
+                        <h3 class="font-bold text-white">Curriculum Vitae - Jesús E. Martínez S.</h3>
+                        <p class="text-xs text-gray-400">Data Analyst & Database Specialist</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <!-- Botón para descargar el PDF si lo colocas en la misma carpeta -->
+                    <a href="curriculum_jesus_martinez.pdf" download class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors flex items-center gap-2">
+                        <i class="fa-solid fa-download"></i> Descargar PDF
+                    </a>
+                    <button onclick="closeModal()" class="text-gray-400 hover:text-white text-xl p-2">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Modal Body (Visor de PDF o Tarjeta de CV) -->
+            <div class="flex-1 bg-gray-950 p-6 overflow-y-auto">
+                <!-- Opción 1: Muestra iframe si subes el PDF al servidor -->
+                <iframe src="curriculum_jesus_martinez.pdf" class="w-full h-full rounded-xl border border-gray-800 hidden md:block"></iframe>
+                
+                <!-- Opción Fallback en texto visual si no carga el iframe localmente -->
+                <div class="block md:hidden space-y-6 text-sm text-gray-300">
+                    <div class="p-4 bg-gray-900 rounded-xl border border-gray-800">
+                        <h4 class="font-bold text-white text-base">Jesús Eduardo Martínez Sánchez[cite: 1]</h4>
+                        <p class="text-xs text-blue-400 mt-0.5">Ingeniero en Informática | Data & BI[cite: 1]</p>
+                        <p class="text-xs text-gray-400 mt-2">Ubicación: Edo Miranda, Los Teques, Av. Bertorelli[cite: 1]</p>
+                        <p class="text-xs text-gray-400">Contacto: jesusmartinezsilver@gmail.com[cite: 1]</p>
+                    </div>
+                    <div>
+                        <h5 class="font-bold text-blue-400 text-xs uppercase tracking-wider mb-2">Perfil</h5>
+                        <p class="text-xs text-gray-400 leading-relaxed">
+                            Ingeniero en Informática enfocado en Análisis de Datos y la gestión estructurada de información[cite: 1]. Sólida base técnica en SQL complementada con experiencia en diseño web y auditoría[cite: 1].
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Modal logic
+        function openModal() {
+            const modal = document.getElementById('cvModal');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modal.classList.add('opacity-100', 'pointer-events-auto');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('cvModal');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modal.classList.remove('opacity-100', 'pointer-events-auto');
+        }
+
+        // Particle Canvas Animation (Data Effect)
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const particles = [];
+        const particleCount = 40;
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 2 + 1,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5
+            });
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'rgba(96, 165, 250, 0.5)';
+            ctx.strokeStyle = 'rgba(147, 197, 253, 0.05)';
+
+            particles.forEach((p, index) => {
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fill();
+
+                for (let j = index + 1; j < particles.length; j++) {
+                    const p2 = particles[j];
+                    const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                    if (dist < 150) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                }
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // Chart.js Chart Implementation
+        const ctxChart = document.getElementById('demoChart').getContext('2d');
+        new Chart(ctxChart, {
+            type: 'line',
+            data: {
+                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul'],
+                datasets: [{
+                    label: 'Registros Procesados',
+                    data: [1200, 1900, 3000, 5000, 4800, 6200, 7500],
+                    borderColor: '#60a5fa',
+                    backgroundColor: 'rgba(96, 165, 250, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9ca3af' } },
+                    y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9ca3af' } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
