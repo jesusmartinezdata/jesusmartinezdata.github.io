@@ -3,41 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jesús E. Martínez S. | Data Analyst & Database Specialist</title>
+    <title>Jesús E. Martínez S. | Specialist en Infraestructura TI & Soporte Técnico</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap');
         
         :root {
-            --bg-body: #0b0f19;
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
-            --glass-bg: rgba(17, 24, 39, 0.6);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-hover-border: rgba(59, 130, 246, 0.4);
-            --card-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
-            --inner-card-bg: linear-gradient(180deg, rgba(17, 24, 39, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
-            --chart-grid: rgba(255, 255, 255, 0.05);
-        }
-
-        body.light-mode {
             --bg-body: #f8fafc;
             --text-main: #0f172a;
-            --text-muted: #475569;
-            --glass-bg: rgba(255, 255, 255, 0.75);
-            --glass-border: rgba(226, 232, 240, 0.8);
-            --glass-hover-border: rgba(37, 99, 235, 0.4);
-            --card-shadow: 0 20px 40px rgba(148, 163, 184, 0.15);
-            --inner-card-bg: linear-gradient(180deg, rgba(241, 245, 249, 0.9) 0%, rgba(226, 232, 240, 0.8) 100%);
-            --chart-grid: rgba(0, 0, 0, 0.05);
+            --glass-bg-light: rgba(255, 255, 255, 0.85);
+            --glass-border-light: rgba(226, 232, 240, 0.9);
+            --glass-bg-dark: rgba(30, 41, 59, 0.7);
+            --glass-border-dark: rgba(255, 255, 255, 0.1);
         }
 
         body {
@@ -45,23 +26,31 @@
             background-color: var(--bg-body);
             color: var(--text-main);
             overflow-x: hidden;
-            transition: background-color 0.4s ease, color 0.4s ease;
         }
 
         .code-font {
             font-family: 'JetBrains Mono', monospace;
         }
 
-        .glass-card {
-            background: var(--glass-bg);
+        .glass-card-light {
+            background: var(--glass-bg-light);
             backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--card-shadow);
+            border: 1px solid var(--glass-border-light);
+            box-shadow: 0 20px 40px rgba(148, 163, 184, 0.12);
             transition: all 0.3s ease;
         }
 
-        .glass-card:hover {
-            border-color: var(--glass-hover-border);
+        .glass-card-dark {
+            background: var(--glass-bg-dark);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border-dark);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card-dark:hover {
+            border-color: rgba(59, 130, 246, 0.4);
+            transform: translateY(-2px);
         }
 
         .glow-bg {
@@ -70,17 +59,19 @@
             filter: blur(120px);
             z-index: 0;
             pointer-events: none;
-            transition: opacity 0.4s ease;
-        }
-
-        body.light-mode .glow-bg {
-            opacity: 0.5;
         }
 
         .text-gradient {
             background: linear-gradient(135deg, #2563eb 0%, #7c3aed 50%, #db2777 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+
+        .tech-grid-pattern {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
         }
 
         @keyframes float {
@@ -90,338 +81,320 @@
         .animate-float {
             animation: float 4s ease-in-out infinite;
         }
-
-        .text-adaptive-main { color: var(--text-main); }
-        .text-adaptive-muted { color: var(--text-muted); }
     </style>
 </head>
 <body class="relative">
 
-    <!-- Glowing Orbs -->
-    <div class="glow-bg w-[500px] h-[500px] bg-blue-500/20 -top-20 -left-20"></div>
-    <div class="glow-bg w-[600px] h-[600px] bg-purple-500/15 top-[30%] -right-20"></div>
-    <div class="glow-bg w-[500px] h-[500px] bg-cyan-400/15 bottom-10 left-1/3"></div>
-
-    <!-- Canvas de Partículas -->
+    <!-- Canvas de Partículas Fondo Global -->
     <canvas id="particleCanvas" class="fixed top-0 left-0 w-full h-full pointer-events-none z-0 opacity-40"></canvas>
 
-    <!-- Container Principal -->
-    <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-12">
+    <!-- SECTION 1: HERO & NAVBAR (Fondo Claro) -->
+    <div class="relative z-10 w-full">
+        <!-- Glowing Orbs (Hero) -->
+        <div class="glow-bg w-[500px] h-[500px] bg-blue-400/20 -top-20 -left-20"></div>
+        <div class="glow-bg w-[600px] h-[600px] bg-purple-400/15 top-[20%] -right-20"></div>
 
-        <!-- Navbar -->
-        <nav class="flex justify-between items-center py-8">
-            <div class="text-2xl font-extrabold tracking-tight flex items-center gap-2">
-                <span class="text-blue-600 dark:text-blue-400 code-font">&lt;JMS&gt;</span>
-                <span class="text-adaptive-main">Jesús Martínez</span>
-            </div>
-
-            <div class="hidden md:flex items-center gap-8 font-medium text-adaptive-muted text-sm">
-                <a href="#about" class="hover:text-blue-500 transition-colors">Sobre Mí</a>
-                <a href="#skills" class="hover:text-blue-500 transition-colors">Stack Técnico</a>
-                <a href="#experience" class="hover:text-blue-500 transition-colors">Trayectoria</a>
-                <a href="#projects" class="hover:text-blue-500 transition-colors">Proyectos & BI</a>
-            </div>
-
-            <div class="flex items-center gap-3">
-                <button id="themeToggle" onclick="toggleTheme()" class="glass-card w-10 h-10 rounded-full flex items-center justify-center text-adaptive-main hover:text-blue-500 transition-all border">
-                    <i id="themeIcon" class="fa-solid fa-moon"></i>
-                </button>
-
-                <button onclick="openModal()" class="glass-card px-5 py-2.5 rounded-full border border-blue-500/30 hover:bg-blue-600/10 transition-all text-sm font-semibold flex items-center gap-2 text-blue-600 dark:text-blue-400">
-                    <i class="fa-solid fa-file-pdf"></i> Ver CV
-                </button>
-            </div>
-        </nav>
-
-        <!-- Hero Section -->
-        <section class="min-h-[80vh] flex flex-col justify-center pt-6 pb-12">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                
-                <!-- Columna Izquierda: Texto -->
-                <div class="lg:col-span-7 flex flex-col items-start">
-                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-xs font-semibold text-blue-600 dark:text-blue-400 mb-6 border border-blue-500/20">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-                        Disponible para proyectos y posiciones Data/BI
-                    </div>
-                    
-                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight mb-6">
-                        Ingeniería de Datos con <span class="text-gradient">Criterio Estético</span> y Visión de Negocio.
-                    </h1>
-                    
-                    <p class="text-base sm:text-lg text-adaptive-muted max-w-xl mb-8 leading-relaxed">
-                        Soy <strong class="text-adaptive-main">Ingeniero en Informática</strong> especializado en arquitectura de bases de datos y Business Intelligence. Combino rigor técnico en SQL con un pasado en diseño UX/UI para transformar arquitecturas complejas en dashboards elegantes y estratégicos.
-                    </p>
-
-                    <div class="flex flex-wrap gap-4 items-center">
-                        <a href="mailto:jesusmartinezsilver@gmail.com" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold px-8 py-4 rounded-xl shadow-lg shadow-blue-500/20 transition-all transform hover:-translate-y-1">
-                            Iniciar Contacto
-                        </a>
-                        <button onclick="openModal()" class="glass-card hover:bg-blue-500/10 text-adaptive-main font-semibold px-8 py-4 rounded-xl transition-all">
-                            Previsualizar CV
-                        </button>
-                    </div>
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <!-- Navbar Ajustado -->
+            <nav class="flex justify-between items-center py-8">
+                <!-- Logo a la izquierda -->
+                <div class="text-2xl font-extrabold tracking-tight flex items-center gap-2">
+                    <span class="text-blue-600 code-font">&lt;JMS&gt;</span>
+                    <span class="text-slate-900">Jesús Martínez</span>
                 </div>
 
-                <!-- Columna Derecha: Foto Limpia y Suelta -->
-                <div class="lg:col-span-5 flex justify-center items-end relative min-h-[480px] lg:min-h-[520px]">
+                <!-- Enlaces y Botón agrupados a la derecha -->
+                <div class="flex items-center gap-8">
+                    <div class="hidden md:flex items-center gap-8 font-medium text-slate-600 text-sm">
+                        <a href="#about" class="hover:text-blue-600 transition-colors">Sobre Mí</a>
+                        <a href="#skills" class="hover:text-blue-600 transition-colors">Stack Técnico</a>
+                        <a href="#experience" class="hover:text-blue-600 transition-colors">Trayectoria</a>
+                    </div>
+
+                    <button onclick="openModal()" class="glass-card-light px-5 py-2.5 rounded-full border border-blue-500/30 hover:bg-blue-600/10 transition-all text-sm font-semibold flex items-center gap-2 text-blue-600">
+                        <i class="fa-solid fa-file-pdf"></i> Ver CV
+                    </button>
+                </div>
+            </nav>
+
+            <!-- Hero Section -->
+            <section class="min-h-[70vh] flex flex-col justify-center pt-6 pb-16">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                     
-                    <!-- Glow Suave Trasero -->
-                    <div class="absolute w-72 h-72 sm:w-96 sm:h-96 bg-blue-500/20 rounded-full blur-[110px] -z-10 bottom-4 left-1/2 transform -translate-x-1/2 pointer-events-none"></div>
-
-                    <!-- Contenedor de Imagen -->
-                    <div class="relative w-full flex justify-center items-end">
-                        
-                        <!-- Imagen Suelta con Transición Desvanecida al Borde Inferior -->
-                        <img src="jesus_traje_sinfondo.png" 
-                             alt="Jesús E. Martínez S." 
-                             class="w-auto h-auto max-h-[480px] sm:max-h-[520px] lg:max-h-[560px] object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.15)] transition-transform duration-500 hover:scale-[1.01]"
-                             style="-webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%); mask-image: linear-gradient(to bottom, black 80%, transparent 100%);">
-
-                        <!-- Badge Flotante Sobrepuesto -->
-                        <div class="absolute bottom-6 -left-2 sm:left-4 glass-card p-3.5 rounded-2xl border border-blue-500/20 flex items-center gap-3 animate-float shadow-xl z-20 backdrop-blur-md">
-                            <div class="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-lg">
-                                <i class="fa-solid fa-database"></i>
-                            </div>
-                            <div>
-                                <p class="text-xs font-bold text-adaptive-main">Jesús E. Martínez S.</p>
-                                <p class="text-[10px] text-blue-600 dark:text-blue-400 font-semibold">Data Analyst & DB Developer</p>
-                            </div>
-                            <span class="flex h-2.5 w-2.5 relative ml-2">
-                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-                            </span>
+                    <!-- Columna Izquierda -->
+                    <div class="lg:col-span-7 flex flex-col items-start">
+                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card-light text-xs font-semibold text-blue-600 mb-6 border border-blue-500/20">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                            Disponible para posiciones de Soporte TI, Redes e Infraestructura
                         </div>
+                        
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight mb-6 text-slate-900">
+                            Infraestructura de TI con <span class="text-gradient">Criterio Técnico</span> y Visión de Procesos.
+                        </h1>
+                        
+                        <p class="text-base sm:text-lg text-slate-600 max-w-xl mb-8 leading-relaxed">
+                            Soy <strong class="text-slate-900">Ingeniero en Informática</strong> especializado en soporte técnico, gestión de redes y administración de bases de datos. Combino rigor técnico en diagnóstico e instalación con habilidades en documentación de sistemas para garantizar continuidad operativa y eficiencia.
+                        </p>
 
+                        <div class="flex flex-wrap gap-4 items-center">
+                            <a href="mailto:jesusmartinezsilver@gmail.com" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold px-8 py-4 rounded-xl shadow-lg shadow-blue-500/20 transition-all transform hover:-translate-y-1">
+                                Iniciar Contacto
+                            </a>
+                            <button onclick="openModal()" class="glass-card-light hover:bg-blue-500/10 text-slate-800 font-semibold px-8 py-4 rounded-xl transition-all">
+                                Previsualizar CV
+                            </button>
+                        </div>
                     </div>
+
+                    <!-- Columna Derecha: Foto -->
+                    <div class="lg:col-span-5 flex justify-center items-end relative min-h-[480px] lg:min-h-[520px]">
+                        <div class="absolute w-72 h-72 sm:w-96 sm:h-96 bg-blue-500/15 rounded-full blur-[110px] -z-10 bottom-4 left-1/2 transform -translate-x-1/2 pointer-events-none"></div>
+
+                        <div class="relative w-full flex justify-center items-end">
+                            <img src="jesus_traje_sinfondo.png" 
+                                 alt="Jesús E. Martínez S." 
+                                 class="w-auto h-auto max-h-[480px] sm:max-h-[520px] lg:max-h-[560px] object-contain drop-shadow-[0_15px_25px_rgba(0,0,0,0.1)] transition-transform duration-500 hover:scale-[1.01]"
+                                 style="-webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%); mask-image: linear-gradient(to bottom, black 80%, transparent 100%);">
+
+                            <div class="absolute bottom-6 -left-2 sm:left-4 glass-card-light p-3.5 rounded-2xl border border-blue-500/20 flex items-center gap-3 animate-float shadow-xl z-20 backdrop-blur-md">
+                                <div class="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-600 font-bold text-lg">
+                                    <i class="fa-solid fa-network-wired"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-slate-900">Jesús E. Martínez S.</p>
+                                    <p class="text-[10px] text-blue-600 font-semibold">IT Support & Systems Specialist</p>
+                                </div>
+                                <span class="flex h-2.5 w-2.5 relative ml-2">
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
+            </section>
+        </div>
+    </div>
 
-            </div>
+    <!-- SECTION 2: BANDA COMPLETA OSCURA DE BORDE A BORDE ("Mi Valor Diferencial") -->
+    <section id="about" class="w-full bg-slate-900 text-white py-24 relative overflow-hidden tech-grid-pattern border-y border-slate-800">
+        
+        <!-- Elementos Vectores Decorativos & Glows de Fondo -->
+        <div class="glow-bg w-[600px] h-[600px] bg-blue-600/15 -top-40 -left-20"></div>
+        <div class="glow-bg w-[500px] h-[500px] bg-purple-600/15 -bottom-20 -right-20"></div>
+        
+        <!-- Adorno Vectorial 1: Líneas de Circuito Esquina -->
+        <svg class="absolute top-0 right-0 opacity-20 text-blue-400 pointer-events-none w-96 h-96" viewBox="0 0 200 200" fill="none">
+            <path d="M100 0V50H200" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4"/>
+            <path d="M150 0V100H200" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="100" cy="50" r="4" fill="currentColor"/>
+            <circle cx="150" cy="100" r="4" fill="currentColor"/>
+        </svg>
 
-            <!-- Quick Metrics Grid -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 w-full mt-12 pt-8 border-t border-gray-500/20">
-                
-            </div>
-        </section>
+        <!-- Adorno Vectorial 2: Puntos de Red Abajo Izquierda -->
+        <svg class="absolute bottom-0 left-0 opacity-15 text-purple-400 pointer-events-none w-80 h-80" viewBox="0 0 200 200" fill="none">
+            <path d="M0 150H100V200" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="100" cy="150" r="5" fill="currentColor"/>
+        </svg>
 
-        <!-- About Section -->
-        <section id="about" class="py-16">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
             <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-3">Mi Valor Diferencial</h2>
-                <p class="text-3xl lg:text-4xl font-bold text-adaptive-main">Donde la Solidez Backend se Encuentra con el Impacto Visual</p>
+                <h2 class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-3 code-font">// MI VALOR DIFERENCIAL</h2>
+                <p class="text-3xl lg:text-4xl font-extrabold text-white">Soporte Técnico Ágil y Administración de Infraestructura</p>
             </div>
 
             <div class="grid md:grid-cols-2 gap-8">
-                <!-- Card 1 -->
-                <div class="glass-card p-8 rounded-2xl relative overflow-hidden">
-                    <div class="w-14 h-14 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-600 dark:text-blue-400 text-2xl mb-6 border border-blue-500/20">
+                <!-- Card 1 (Dark Glass) -->
+                <div class="glass-card-dark p-8 rounded-3xl relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-bl-full pointer-events-none transition-all group-hover:bg-blue-500/20"></div>
+                    <div class="w-14 h-14 rounded-2xl bg-blue-500/20 flex items-center justify-center text-blue-400 text-2xl mb-6 border border-blue-500/30">
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 text-white">Soporte Técnico & Redes</h3>
+                    <p class="text-slate-300 leading-relaxed text-sm mb-6">
+                        Diagnóstico, resolución de incidencias en hardware/software y soporte multi-nivel. Configuración e instalación de redes cableadas e inalámbricas para mantener la continuidad operativa corporativa.
+                    </p>
+                    <ul class="space-y-2.5 text-xs code-font text-slate-300 border-t border-slate-800/80 pt-6">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-blue-400"></i> Atención de Ticket / Helpdesk L1 y L2</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-blue-400"></i> Instalación de Hardware & Configuración de SO</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-blue-400"></i> Cableado Estructurado y Protocolos TCP/IP</li>
+                    </ul>
+                </div>
+
+                <!-- Card 2 (Dark Glass) -->
+                <div class="glass-card-dark p-8 rounded-3xl relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-bl-full pointer-events-none transition-all group-hover:bg-purple-500/20"></div>
+                    <div class="w-14 h-14 rounded-2xl bg-purple-500/20 flex items-center justify-center text-purple-400 text-2xl mb-6 border border-purple-500/30">
                         <i class="fa-solid fa-database"></i>
                     </div>
-                    <h3 class="text-2xl font-bold mb-3 text-adaptive-main">Database Specialist</h3>
-                    <p class="text-adaptive-muted leading-relaxed text-sm mb-6">
-                        Estructuración, optimización de consultas complejas en PostgreSQL y diseño de arquitectura relacional confiable. Garantizo que el origen de los datos sea rápido, escalable y limpio.
+                    <h3 class="text-2xl font-bold mb-3 text-white">Bases de Datos & Sistemas</h3>
+                    <p class="text-slate-300 leading-relaxed text-sm mb-6">
+                        Mantenimiento, respaldo y optimización de bases de datos PostgreSQL y SQL. Formación especializada en arquitectura relacional y validación estricta de la integridad de los datos.
                     </p>
-                    <ul class="space-y-2 text-xs code-font text-adaptive-main">
-                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-blue-500"></i> Modelado Relacional / Normalización</li>
-                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-blue-500"></i> Optimización de Consultas SQL Avanzadas</li>
-                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-blue-500"></i> Flujos ETL y Gestión Estructurada</li>
-                    </ul>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="glass-card p-8 rounded-2xl relative overflow-hidden">
-                    <div class="w-14 h-14 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-600 dark:text-purple-400 text-2xl mb-6 border border-purple-500/20">
-                        <i class="fa-solid fa-chart-line"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-3 text-adaptive-main">Data Analyst & BI</h3>
-                    <p class="text-adaptive-muted leading-relaxed text-sm mb-6">
-                        Traducción de datos tabulares a historias visuales y dashboards ejecutivos. Gracias a mi trasfondo en Front-End y diseño gráfico, construyo interfaces de analítica claras e intuitivas.
-                    </p>
-                    <ul class="space-y-2 text-xs code-font text-adaptive-main">
-                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-purple-500"></i> Dashboards Interactivos en Power BI</li>
-                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-purple-500"></i> Análisis con Python & Pandas</li>
-                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-purple-500"></i> Diseño de Experiencia de Usuario (UI/UX)</li>
+                    <ul class="space-y-2.5 text-xs code-font text-slate-300 border-t border-slate-800/80 pt-6">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-purple-400"></i> Gestión y Mantenimiento PostgreSQL / SQL</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-purple-400"></i> Control y Verificación de Calidad de Datos</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-purple-400"></i> Documentación de Interfaces y Procesos TI</li>
                     </ul>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
+
+    <!-- SECTION 3: CONTENT EN CONTENEDOR CENTRAL (Stack, Trayectoria) -->
+    <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-12">
 
         <!-- Technical Stack -->
-        <section id="skills" class="py-16">
-            <div class="glass-card rounded-3xl p-10 lg:p-14">
-                <div class="max-w-xl mb-12">
-                    <h2 class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-3">Stack Tecnológico</h2>
-                    <p class="text-3xl font-bold text-adaptive-main">Herramientas & Dominio</p>
-                </div>
-
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6 text-center">
-                    <div class="p-4 rounded-xl glass-card hover:border-blue-500/50 transition-all">
-                        <i class="fa-solid fa-server text-3xl text-blue-500 mb-3"></i>
-                        <h4 class="font-bold text-sm text-adaptive-main">PostgreSQL / SQL</h4>
-                        <p class="text-[10px] text-adaptive-muted mt-1">Avanzado</p>
-                    </div>
-                    <div class="p-4 rounded-xl glass-card hover:border-yellow-500/50 transition-all">
-                        <i class="fa-brands fa-python text-3xl text-yellow-500 mb-3"></i>
-                        <h4 class="font-bold text-sm text-adaptive-main">Python</h4>
-                        <p class="text-[10px] text-adaptive-muted mt-1">Análisis de Datos</p>
-                    </div>
-                    <div class="p-4 rounded-xl glass-card hover:border-amber-500/50 transition-all">
-                        <i class="fa-solid fa-chart-column text-3xl text-amber-500 mb-3"></i>
-                        <h4 class="font-bold text-sm text-adaptive-main">Power BI</h4>
-                        <p class="text-[10px] text-adaptive-muted mt-1">Business Intelligence</p>
-                    </div>
-                    <div class="p-4 rounded-xl glass-card hover:border-cyan-500/50 transition-all">
-                        <i class="fa-solid fa-code text-3xl text-cyan-500 mb-3"></i>
-                        <h4 class="font-bold text-sm text-adaptive-main">Front-End</h4>
-                        <p class="text-[10px] text-adaptive-muted mt-1">HTML/CSS/JS/Figma</p>
-                    </div>
-                    <div class="p-4 rounded-xl glass-card hover:border-green-500/50 transition-all">
-                        <i class="fa-solid fa-file-excel text-3xl text-green-500 mb-3"></i>
-                        <h4 class="font-bold text-sm text-adaptive-main">Excel Avanzado</h4>
-                        <p class="text-[10px] text-adaptive-muted mt-1">Modelado & Reportes</p>
-                    </div>
-                    <div class="p-4 rounded-xl glass-card hover:border-pink-500/50 transition-all">
-                        <i class="fa-solid fa-palette text-3xl text-pink-500 mb-3"></i>
-                        <h4 class="font-bold text-sm text-adaptive-main">Diseño UI/UX</h4>
-                        <p class="text-[10px] text-adaptive-muted mt-1">Adobe XD / Figma</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Interactive BI Demo Widget -->
-        <section id="projects" class="py-16">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12">
-                <div>
-                    <h2 class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-3">Demo Interactiva</h2>
-                    <p class="text-3xl font-bold text-adaptive-main">Visualización Dinámica de Muestra</p>
-                </div>
-                <p class="text-xs text-adaptive-muted max-w-xs mt-2 md:mt-0">Demo simulada renderizada en tiempo real mediante JavaScript.</p>
+        <section id="skills" class="py-20">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h2 class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-3">Stack Tecnológico</h2>
+                <p class="text-3xl font-bold text-slate-900">Herramientas & Entorno de Infraestructura</p>
             </div>
 
-            <div class="glass-card p-8 rounded-3xl">
-                <div class="flex flex-wrap justify-between items-center mb-6 gap-4">
-                    <div>
-                        <h3 class="font-bold text-lg text-adaptive-main">Métricas de Rendimiento General</h3>
-                        <p class="text-xs text-adaptive-muted">Consolidado de contratos procesados y auditorías</p>
-                    </div>
-                    <div class="flex gap-2">
-                        <span class="px-3 py-1 bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs rounded-lg border border-blue-500/20">SQL Pipeline Active</span>
-                        <span class="px-3 py-1 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs rounded-lg border border-emerald-500/20">Accuracy 99.4%</span>
-                    </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6 text-center">
+                <div class="glass-card-light p-6 rounded-2xl hover:border-blue-500/50 transition-all hover:-translate-y-1">
+                    <i class="fa-solid fa-laptop-code text-3xl text-blue-600 mb-3"></i>
+                    <h4 class="font-bold text-sm text-slate-900">Soporte TI</h4>
+                    <p class="text-[10px] text-slate-500 mt-1 code-font">Mantenimiento & Helpdesk</p>
                 </div>
-                <div class="h-64 w-full">
-                    <canvas id="demoChart"></canvas>
+                <div class="glass-card-light p-6 rounded-2xl hover:border-cyan-500/50 transition-all hover:-translate-y-1">
+                    <i class="fa-solid fa-network-wired text-3xl text-cyan-500 mb-3"></i>
+                    <h4 class="font-bold text-sm text-slate-900">Redes</h4>
+                    <p class="text-[10px] text-slate-500 mt-1 code-font">TCP/IP & Cableado</p>
+                </div>
+                <div class="glass-card-light p-6 rounded-2xl hover:border-blue-500/50 transition-all hover:-translate-y-1">
+                    <i class="fa-solid fa-database text-3xl text-blue-600 mb-3"></i>
+                    <h4 class="font-bold text-sm text-slate-900">PostgreSQL / SQL</h4>
+                    <p class="text-[10px] text-slate-500 mt-1 code-font">Administración</p>
+                </div>
+                <div class="glass-card-light p-6 rounded-2xl hover:border-yellow-500/50 transition-all hover:-translate-y-1">
+                    <i class="fa-brands fa-python text-3xl text-yellow-500 mb-3"></i>
+                    <h4 class="font-bold text-sm text-slate-900">Python</h4>
+                    <p class="text-[10px] text-slate-500 mt-1 code-font">Scripting & Automatización</p>
+                </div>
+                <div class="glass-card-light p-6 rounded-2xl hover:border-emerald-500/50 transition-all hover:-translate-y-1">
+                    <i class="fa-solid fa-file-lines text-3xl text-emerald-600 mb-3"></i>
+                    <h4 class="font-bold text-sm text-slate-900">Documentación</h4>
+                    <p class="text-[10px] text-slate-500 mt-1 code-font">Manuales & Reportes</p>
+                </div>
+                <div class="glass-card-light p-6 rounded-2xl hover:border-purple-500/50 transition-all hover:-translate-y-1">
+                    <i class="fa-solid fa-code text-3xl text-purple-500 mb-3"></i>
+                    <h4 class="font-bold text-sm text-slate-900">Desarrollo Web</h4>
+                    <p class="text-[10px] text-slate-500 mt-1 code-font">HTML/CSS/JS</p>
                 </div>
             </div>
         </section>
 
         <!-- Experience Timeline -->
-        <section id="experience" class="py-16">
+        <section id="experience" class="py-20">
             <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-3">Trayectoria</h2>
-                <p class="text-3xl font-bold text-adaptive-main">Experiencia & Formación Académica</p>
+                <h2 class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-3">Trayectoria</h2>
+                <p class="text-3xl font-bold text-slate-900">Experiencia & Formación Académica</p>
             </div>
 
             <div class="grid md:grid-cols-2 gap-8">
                 <!-- Laboral -->
                 <div class="space-y-6">
-                    <h3 class="text-xl font-bold text-blue-600 dark:text-blue-400 flex items-center gap-2 mb-6">
+                    <h3 class="text-xl font-bold text-blue-600 flex items-center gap-2 mb-6">
                         <i class="fa-solid fa-briefcase"></i> Experiencia Laboral
                     </h3>
 
-                    <div class="glass-card p-6 rounded-xl relative">
-                        <span class="text-xs text-blue-600 dark:text-blue-400 font-semibold">2023 - Presente</span>
-                        <h4 class="font-bold text-lg mt-1 text-adaptive-main">Diseñador Web Front-End & UI/UX</h4>
-                        <p class="text-xs text-adaptive-muted mb-3">Independiente</p>
-                        <p class="text-sm text-adaptive-muted">Diseño e implementación de interfaces web interactivas con énfasis en usabilidad y conexión con bases de datos backend.</p>
+                    <div class="glass-card-light p-6 rounded-2xl relative">
+                        <span class="text-xs text-blue-600 font-semibold">2023 - Presente</span>
+                        <h4 class="font-bold text-lg mt-1 text-slate-900">Diseñador Web Front-End & UI/UX</h4>
+                        <p class="text-xs text-slate-500 mb-3">Independiente</p>
+                        <p class="text-sm text-slate-600">Desarrollo de interfaces web responsivas, mantenimiento de sitios y aseguramiento de la accesibilidad y conectividad con servicios backend.</p>
                     </div>
 
-                    <div class="glass-card p-6 rounded-xl relative">
-                        <span class="text-xs text-blue-600 dark:text-blue-400 font-semibold">Mayo 2023 - Junio 2026</span>
-                        <h4 class="font-bold text-lg mt-1 text-adaptive-main">Auditor de Calidad de Datos</h4>
-                        <p class="text-xs text-adaptive-muted mb-3">Sector Energético</p>
-                        <p class="text-sm text-adaptive-muted">Verificación, validación y conformidad de contratos masivos, asegurando integridad en los registros.</p>
+                    <div class="glass-card-light p-6 rounded-2xl relative">
+                        <span class="text-xs text-blue-600 font-semibold">Mayo 2023 - Junio 2026</span>
+                        <h4 class="font-bold text-lg mt-1 text-slate-900">Auditor de Calidad de Datos & Soporte Operativo</h4>
+                        <p class="text-xs text-slate-500 mb-3">Sector Energético</p>
+                        <p class="text-sm text-slate-600">Verificación y diagnóstico técnico de registros masivos, asegurando consistencia de datos y resolución de fallas en procesos de auditoría.</p>
                     </div>
                 </div>
 
                 <!-- Educación -->
                 <div class="space-y-6">
-                    <h3 class="text-xl font-bold text-purple-600 dark:text-purple-400 flex items-center gap-2 mb-6">
+                    <h3 class="text-xl font-bold text-purple-600 flex items-center gap-2 mb-6">
                         <i class="fa-solid fa-graduation-cap"></i> Educación & Certificaciones
                     </h3>
 
-                    <div class="glass-card p-6 rounded-xl border-l-4 border-l-purple-500">
-                        <span class="text-xs text-purple-600 dark:text-purple-400 font-semibold">Universidad Central de Venezuela (UCV)</span>
-                        <h4 class="font-bold text-lg mt-1 text-adaptive-main">Diplomado en Database Developer</h4>
-                        <p class="text-xs text-adaptive-muted">Junio 2026 - En curso</p>
+                    <div class="glass-card-light p-6 rounded-2xl border-l-4 border-l-purple-500">
+                        <span class="text-xs text-purple-600 font-semibold">Universidad Central de Venezuela (UCV)</span>
+                        <h4 class="font-bold text-lg mt-1 text-slate-900">Diplomado en Database Developer</h4>
+                        <p class="text-xs text-slate-500">Junio 2026 - En curso</p>
                     </div>
 
-                    <div class="glass-card p-6 rounded-xl border-l-4 border-l-purple-500">
-                        <span class="text-xs text-purple-600 dark:text-purple-400 font-semibold">Universidad Central de Venezuela (UCV)</span>
-                        <h4 class="font-bold text-lg mt-1 text-adaptive-main">Diplomado en Business Intelligence</h4>
-                        <p class="text-xs text-adaptive-muted">Julio 2025 - Diciembre 2025</p>
+                    <div class="glass-card-light p-6 rounded-2xl border-l-4 border-l-purple-500">
+                        <span class="text-xs text-purple-600 font-semibold">Universidad Central de Venezuela (UCV)</span>
+                        <h4 class="font-bold text-lg mt-1 text-slate-900">Diplomado en Business Intelligence</h4>
+                        <p class="text-xs text-slate-500">Julio 2025 - Diciembre 2025</p>
                     </div>
 
-                    <div class="glass-card p-6 rounded-xl border-l-4 border-l-blue-500">
-                        <span class="text-xs text-blue-600 dark:text-blue-400 font-semibold">Universidad UPTAMCA</span>
-                        <h4 class="font-bold text-lg mt-1 text-adaptive-main">Ingeniería en Informática</h4>
-                        <p class="text-xs text-adaptive-muted">Graduado en 2022</p>
+                    <div class="glass-card-light p-6 rounded-2xl border-l-4 border-l-blue-500">
+                        <span class="text-xs text-blue-600 font-semibold">Universidad UPTAMCA</span>
+                        <h4 class="font-bold text-lg mt-1 text-slate-900">Ingeniería en Informática</h4>
+                        <p class="text-xs text-slate-500">Graduado en 2022</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Footer -->
-        <footer class="py-12 border-t border-gray-500/20 flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-adaptive-muted">
-            <div>
-                <p>© 2026 Jesús E. Martínez S. - Todos los derechos reservados.</p>
-                <p class="text-xs text-adaptive-muted mt-1">Edo Miranda, Los Teques, Venezuela</p>
-            </div>
-            <div class="flex gap-6 text-xl">
-                <a href="mailto:jesusmartinezsilver@gmail.com" class="hover:text-blue-500 transition-colors"><i class="fa-solid fa-envelope"></i></a>
-                <a href="tel:+584242300290" class="hover:text-blue-500 transition-colors"><i class="fa-solid fa-phone"></i></a>
-            </div>
-        </footer>
-
     </div>
 
+    <!-- FOOTER CORPORATIVO OSCURO FULL WIDTH -->
+    <footer class="w-full bg-slate-950 text-slate-400 py-12 border-t border-slate-800 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row justify-between items-center gap-6 text-sm">
+            <div>
+                <p class="text-slate-200 font-semibold">© 2026 Jesús E. Martínez S. - Todos los derechos reservados.</p>
+                <p class="text-xs text-slate-500 mt-1">Edo Miranda, Los Teques, Venezuela</p>
+            </div>
+            <div class="flex gap-6 text-xl">
+                <a href="mailto:jesusmartinezsilver@gmail.com" class="hover:text-blue-400 transition-colors"><i class="fa-solid fa-envelope"></i></a>
+                <a href="tel:+584242300290" class="hover:text-blue-400 transition-colors"><i class="fa-solid fa-phone"></i></a>
+            </div>
+        </div>
+    </footer>
+
     <!-- CV MODAL POPUP -->
-    <div id="cvModal" class="fixed inset-0 bg-black/70 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="glass-card w-full max-w-4xl h-[90vh] rounded-2xl flex flex-col overflow-hidden border">
+    <div id="cvModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="glass-card-light w-full max-w-4xl h-[90vh] rounded-2xl flex flex-col overflow-hidden border">
             <!-- Modal Header -->
-            <div class="flex justify-between items-center p-6 border-b border-gray-500/20">
+            <div class="flex justify-between items-center p-6 border-b border-slate-200 bg-white">
                 <div class="flex items-center gap-3">
                     <i class="fa-solid fa-file-pdf text-red-500 text-2xl"></i>
                     <div>
-                        <h3 class="font-bold text-adaptive-main">Curriculum Vitae - Jesús E. Martínez S.</h3>
-                        <p class="text-xs text-adaptive-muted">Data Analyst & Database Specialist</p>
+                        <h3 class="font-bold text-slate-900">Curriculum Vitae - Jesús E. Martínez S.</h3>
+                        <p class="text-xs text-slate-500">Ingeniero en Informática | IT Support & Systems</p>
                     </div>
                 </div>
                 <div class="flex items-center gap-3">
                     <a href="curriculum_jesus_martinez.pdf" download class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors flex items-center gap-2">
                         <i class="fa-solid fa-download"></i> Descargar PDF
                     </a>
-                    <button onclick="closeModal()" class="text-adaptive-muted hover:text-adaptive-main text-xl p-2">
+                    <button onclick="closeModal()" class="text-slate-500 hover:text-slate-900 text-xl p-2">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                 </div>
             </div>
             
             <!-- Modal Body -->
-            <div class="flex-1 p-6 overflow-y-auto">
-                <iframe src="curriculum_jesus_martinez.pdf" class="w-full h-full rounded-xl border border-gray-500/20 hidden md:block"></iframe>
+            <div class="flex-1 p-6 overflow-y-auto bg-slate-50">
+                <iframe src="curriculum_jesus_martinez.pdf" class="w-full h-full rounded-xl border border-slate-200 hidden md:block"></iframe>
                 
-                <div class="block md:hidden space-y-6 text-sm text-adaptive-main">
-                    <div class="p-4 glass-card rounded-xl">
-                        <h4 class="font-bold text-base">Jesús Eduardo Martínez Sánchez</h4>
-                        <p class="text-xs text-blue-500 mt-0.5">Ingeniero en Informática | Data & BI</p>
-                        <p class="text-xs text-adaptive-muted mt-2">Ubicación: Edo Miranda, Los Teques</p>
-                        <p class="text-xs text-adaptive-muted">Contacto: jesusmartinezsilver@gmail.com</p>
+                <div class="block md:hidden space-y-6 text-sm text-slate-800">
+                    <div class="p-4 glass-card-light rounded-xl">
+                        <h4 class="font-bold text-base text-slate-900">Jesús Eduardo Martínez Sánchez</h4>
+                        <p class="text-xs text-blue-600 mt-0.5">Ingeniero en Informática | IT Support & Systems</p>
+                        <p class="text-xs text-slate-500 mt-2">Ubicación: Edo Miranda, Los Teques</p>
+                        <p class="text-xs text-slate-500">Contacto: jesusmartinezsilver@gmail.com</p>
                     </div>
                     <div>
-                        <h5 class="font-bold text-blue-500 text-xs uppercase tracking-wider mb-2">Perfil</h5>
-                        <p class="text-xs text-adaptive-muted leading-relaxed">
-                            Ingeniero en Informática enfocado en Análisis de Datos y la gestión estructurada de información. Sólida base técnica en SQL complementada con experiencia en diseño web y auditoría.
+                        <h5 class="font-bold text-blue-600 text-xs uppercase tracking-wider mb-2">Perfil</h5>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Ingeniero en Informática enfocado en soporte técnico de infraestructura, administración de bases de datos y gestión de redes. Sólida capacidad de resolución de incidencias, mantenimiento correctivo y documentación técnica.
                         </p>
                     </div>
                 </div>
@@ -431,32 +404,6 @@
 
     <!-- Scripts -->
     <script>
-        let demoChart;
-
-        function applyTheme(theme) {
-            const body = document.body;
-            const icon = document.getElementById('themeIcon');
-            
-            if (theme === 'light') {
-                body.classList.add('light-mode');
-                icon.className = 'fa-solid fa-sun text-amber-500';
-            } else {
-                body.classList.remove('light-mode');
-                icon.className = 'fa-solid fa-moon text-blue-400';
-            }
-            
-            updateChartColors(theme);
-        }
-
-        function toggleTheme() {
-            const currentTheme = document.body.classList.contains('light-mode') ? 'dark' : 'light';
-            localStorage.setItem('theme', currentTheme);
-            applyTheme(currentTheme);
-        }
-
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        applyTheme(savedTheme);
-
         function openModal() {
             const modal = document.getElementById('cvModal');
             modal.classList.remove('opacity-0', 'pointer-events-none');
@@ -481,23 +428,22 @@
         window.addEventListener('resize', resizeCanvas);
 
         const particles = [];
-        const particleCount = 40;
+        const particleCount = 35;
 
         for (let i = 0; i < particleCount; i++) {
             particles.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
                 radius: Math.random() * 2 + 1,
-                vx: (Math.random() - 0.5) * 0.5,
-                vy: (Math.random() - 0.5) * 0.5
+                vx: (Math.random() - 0.5) * 0.4,
+                vy: (Math.random() - 0.5) * 0.4
             });
         }
 
         function animateParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            const isLight = document.body.classList.contains('light-mode');
-            ctx.fillStyle = isLight ? 'rgba(37, 99, 235, 0.4)' : 'rgba(96, 165, 250, 0.5)';
-            ctx.strokeStyle = isLight ? 'rgba(37, 99, 235, 0.08)' : 'rgba(147, 197, 253, 0.05)';
+            ctx.fillStyle = 'rgba(37, 99, 235, 0.3)';
+            ctx.strokeStyle = 'rgba(37, 99, 235, 0.06)';
 
             particles.forEach((p, index) => {
                 p.x += p.vx;
@@ -513,7 +459,7 @@
                 for (let j = index + 1; j < particles.length; j++) {
                     const p2 = particles[j];
                     const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-                    if (dist < 150) {
+                    if (dist < 140) {
                         ctx.beginPath();
                         ctx.moveTo(p.x, p.y);
                         ctx.lineTo(p2.x, p2.y);
@@ -524,44 +470,6 @@
             requestAnimationFrame(animateParticles);
         }
         animateParticles();
-
-        // Chart.js Setup
-        const ctxChart = document.getElementById('demoChart').getContext('2d');
-        demoChart = new Chart(ctxChart, {
-            type: 'line',
-            data: {
-                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul'],
-                datasets: [{
-                    label: 'Registros Procesados',
-                    data: [1200, 1900, 3000, 5000, 4800, 6200, 7500],
-                    borderColor: '#2563eb',
-                    backgroundColor: 'rgba(37, 99, 235, 0.1)',
-                    fill: true,
-                    tension: 0.4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: {
-                    x: { grid: { color: 'rgba(148, 163, 184, 0.1)' }, ticks: { color: '#64748b' } },
-                    y: { grid: { color: 'rgba(148, 163, 184, 0.1)' }, ticks: { color: '#64748b' } }
-                }
-            }
-        });
-
-        function updateChartColors(theme) {
-            if (!demoChart) return;
-            const textColor = theme === 'light' ? '#475569' : '#9ca3af';
-            const gridColor = theme === 'light' ? 'rgba(0, 0, 0, 0.05)' : 'rgba(255, 255, 255, 0.05)';
-
-            demoChart.options.scales.x.ticks.color = textColor;
-            demoChart.options.scales.y.ticks.color = textColor;
-            demoChart.options.scales.x.grid.color = gridColor;
-            demoChart.options.scales.y.grid.color = gridColor;
-            demoChart.update();
-        }
     </script>
 </body>
 </html>
